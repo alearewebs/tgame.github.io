@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Typing Game</title>
+  <style>
+    body {
+      background: #0f172a;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 60px;
+    }
+
+    input {
+      font-size: 20px;
+      padding: 10px;
+      width: 250px;
+      text-align: center;
+    }
+
+    .word {
+      font-size: 32px;
+      margin: 20px;
+    }
+
+    .stats {
+      font-size: 18px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Typing Game ⌨️</h1>
+
+  <div class="word" id="word">loading...</div>
+
+  <input
+    type="text"
+    id="input"
+    placeholder="Type here"
+    autofocus
+  />
+
+  <div class="stats">
+    <p>Score: <span id="score">0</span></p>
+    <p>Time: <span id="time">10</span>s</p>
+  </div>
+
+  <script>
+    const words = [
+      "javascript", "typing", "game", "keyboard",
+      "github", "html", "coding", "developer"
+    ];
+
+    let score = 0;
+    let time = 10;
+    let currentWord = "";
+
+    const wordEl = document.getElementById("word");
+    const inputEl = document.getElementById("input");
+    const scoreEl = document.getElementById("score");
+    const timeEl = document.getElementById("time");
+
+    function getRandomWord() {
+      return words[Math.floor(Math.random() * words.length)];
+    }
+
+    function showNewWord() {
+      currentWord = getRandomWord();
+      wordEl.textContent = currentWord;
+    }
+
+    inputEl.addEventListener("input", () => {
+      if (inputEl.value === currentWord) {
+        score++;
+        time += 2;
+        scoreEl.textContent = score;
+        inputEl.value = "";
+        showNewWord();
+      }
+    });
+
+    setInterval(() => {
+      time--;
+      timeEl.textContent = time;
+
+      if (time <= 0) {
+        alert("Game over! Your score: " + score);
+        location.reload();
+      }
+    }, 1000);
+
+    showNewWord();
+  </script>
+
+</body>
+</html>
